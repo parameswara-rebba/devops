@@ -1,0 +1,26 @@
+# Root Application (the "app of apps").
+# It watches gitops-argocd/apps and creates every Application defined there,
+# so adding a new workload is just a matter of committing a new file to that folder.
+#
+# It uses the built-in "default" project because it needs to create Application
+# resources in the argocd namespace, which the restricted "web" project does not allow.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: root
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/parameswara-rebba/devops.git
+    targetRevision: master
+    path: gitops-argocd/apps
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

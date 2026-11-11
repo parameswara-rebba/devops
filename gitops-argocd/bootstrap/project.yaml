@@ -1,0 +1,22 @@
+# AppProject: the guard rails for the workload Applications.
+# Applications in this project may only deploy from this repository
+# into the web-dev and web-prod namespaces of the local cluster.
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: web
+  namespace: argocd
+spec:
+  description: Sample web application, dev and prod
+  sourceRepos:
+    - https://github.com/parameswara-rebba/devops.git
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: web-dev
+    - server: https://kubernetes.default.svc
+      namespace: web-prod
+  # Namespace is the only cluster-scoped kind allowed, so that the
+  # CreateNamespace sync option can create the target namespaces.
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace

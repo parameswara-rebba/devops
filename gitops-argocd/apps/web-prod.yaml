@@ -1,0 +1,21 @@
+# Prod: no automated sync. Argo CD shows the application as OutOfSync when
+# master changes, and someone has to press Sync (or run `argocd app sync web-prod`).
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: web-prod
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: web
+  source:
+    repoURL: https://github.com/parameswara-rebba/devops.git
+    targetRevision: master
+    path: gitops-argocd/workloads/web/overlays/prod
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: web-prod
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true

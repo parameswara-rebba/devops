@@ -10,6 +10,7 @@ Personal DevOps notes, cheat sheets and pipeline examples.
 | Terraform | [Install and setup](terraform/install-and-setup.md) |
 | Kubernetes | [CKA cheat sheet](kubernetes/cka-cheat-sheet.md), [Twistlock Defender](kubernetes/twistlock-defender.md) |
 | Ansible | [Placeholder](ansible/README.md) |
+| GitOps | [Argo CD app-of-apps project](gitops-argocd/README.md) |
 | Interview prep | [DevOps interview questions](interview-prep/devops-interview-questions.md) |
 
 ## Pipelines
